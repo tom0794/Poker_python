@@ -2,6 +2,7 @@ from Card import Card
 from Deck import Deck
 import HandStrength
 import random
+import Increment
 
 if __name__ == '__main__':
     deck = Deck()
@@ -39,3 +40,10 @@ if __name__ == '__main__':
         deck.cards.remove(new_card)
 
     print(HandStrength.get_strength(player_hand, comm_cards))
+
+    # index_list = [0, 1, 2, 3, 4]
+    # print(index_list)
+    # while index_list:
+    #     index_list = Increment.increment_indices(index_list, len(deck.cards))
+    #     print(index_list)
+
