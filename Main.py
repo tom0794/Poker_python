@@ -39,9 +39,9 @@ def get_card_index(cards, strength, suit):
 
 
 if __name__ == '__main__':
-    deck = Deck()
 
     while True:
+        deck = Deck()
         num_players = input("How many players? Enter 2-8: ")
         if num_players not in "2345678" or len(num_players) != 1:
             print("Invalid entry")
@@ -49,6 +49,7 @@ if __name__ == '__main__':
         num_players = int(num_players)
 
         player_hands = []
+        # get player cards
         for player_num in range(num_players):
             valid_entry = False
             current_player_hand = []
@@ -81,8 +82,39 @@ if __name__ == '__main__':
                         break
                 valid_entry = True
                 player_hands.append([new_card1, new_card2])
-        for hand in player_hands:
-            print(str(hand[0]) + " " + str(hand[1]))
+
+        index_list = [0, 1, 2, 3, 4]
+        total_hands = 0
+        player_wins = []
+        for player in player_hands:
+            player_wins.append(0)
+        while index_list:
+            comm_cards = []
+            for index in index_list:
+                comm_cards.append(deck.cards[index])
+
+            strongest_index = 0
+            strongest_hand = ""
+            for player_index in range(len(player_wins)):
+                hand_strength = HandStrength.get_strength(player_hands[player_index], comm_cards)
+                if hand_strength > strongest_hand:
+                    strongest_hand = hand_strength
+                    strongest_index = player_index
+                elif hand_strength == strongest_hand:
+                    strongest_index = -1
+
+            if strongest_index != -1:
+                player_wins[strongest_index] += 1
+
+            index_list = Increment.increment_indices(index_list, len(deck.cards))
+            total_hands += 1
+            if total_hands % 100000 == 0:
+                print(str(total_hands) + " hands done")
+
+        print(str(total_hands) + " hands done")
+        for index in range(len(player_wins)):
+            odds = float((player_wins[index] / total_hands) * 100)
+            print(str(player_hands[index][0]) + " " + str(player_hands[index][1]) + " - " + "%.2f" % odds + "%")
 
     # card1 = Card(3, 3)
     # card2 = Card(6, 2)

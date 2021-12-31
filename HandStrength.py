@@ -9,9 +9,6 @@ def get_strength(player_hand, comm_cards):
     for card in comm_cards:
         hand.append(card)
     hand.sort(key=sort_key)
-    for card in hand:
-        print(card)
-    # return hand
 
     # check for flush and straight flush
     flush = check_flush(hand)
