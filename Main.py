@@ -93,7 +93,7 @@ if __name__ == '__main__':
             for index in index_list:
                 comm_cards.append(deck.cards[index])
 
-            strongest_index = 0
+            strongest_index = -1
             strongest_hand = ""
             for player_index in range(len(player_wins)):
                 hand_strength = HandStrength.get_strength(player_hands[player_index], comm_cards)
@@ -116,14 +116,14 @@ if __name__ == '__main__':
             odds = float((player_wins[index] / total_hands) * 100)
             print(str(player_hands[index][0]) + " " + str(player_hands[index][1]) + " - " + "%.2f" % odds + "%")
 
-    # card1 = Card(3, 3)
-    # card2 = Card(6, 2)
-    # card3 = Card(7, 1)
-    # card4 = Card(11, 1)
-    # card5 = Card(4, 3)
-    # card6 = Card(0, 0)
-    # card7 = Card(9, 2)
-
+    # card1 = Card(0, 2)
+    # card2 = Card(1, 2)
+    # card3 = Card(2, 2)
+    # card4 = Card(3, 2)
+    # card5 = Card(4, 2)
+    # card6 = Card(5, 2)
+    # card7 = Card(5, 3)
+    #
     # player_hand = [card1, card2]
     # comm_cards = [card3, card4, card5, card6, card7]
     # full_hand = HandStrength.get_strength(player_hand, comm_cards)

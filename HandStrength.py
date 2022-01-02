@@ -9,6 +9,7 @@ def get_strength(player_hand, comm_cards):
     for card in comm_cards:
         hand.append(card)
     hand.sort(key=sort_key)
+    diffs = get_diffs(hand)
 
     # check for flush and straight flush
     flush = check_flush(hand)
@@ -16,25 +17,26 @@ def get_strength(player_hand, comm_cards):
         for card in hand:
             if card.suit != flush:
                 hand.remove(card)
-        straight_flush = check_straight(hand)
+        diffs = get_diffs(hand)
+        straight_flush = check_straight(hand, diffs)
         if straight_flush != -1:
             return get_straight_flush_strength(straight_flush)
         else:
             return get_flush_strength(hand, flush)
 
     # check for straight
-    straight = check_straight(hand)
+    straight = check_straight(hand, diffs)
     if straight != -1:
         return get_straight_strength(straight)
 
     # check for quads
-    quads = check_quads(hand)
+    quads = check_quads(hand, diffs)
     if quads != -1:
         return get_quads_strength(hand, quads)
 
     # find trips and pairs
-    trips = check_trips(hand)
-    pairs = check_pairs(hand)
+    trips = check_trips(hand, diffs)
+    pairs = check_pairs(hand, diffs)
 
     # check for full house
     if len(trips) > 0 and len(pairs) > 0 or len(trips) >= 2:
@@ -60,7 +62,10 @@ def get_strength(player_hand, comm_cards):
 
 
 def get_diffs(hand):
-    diffs = [-1, -1, -1, -1, -1, -1, -1]
+    # diffs = [-1, -1, -1, -1, -1, -1, -1]
+    diffs = []
+    for i in hand:
+        diffs.append(-1)
     for index in range(len(hand)):
         if index > 0:
             diffs[index] = hand[index].strength - hand[index - 1].strength
@@ -90,14 +95,14 @@ def check_flush(hand):
 # the strength of each card in the sequence is one greater than the previous, returns the value
 # of the largest strength in the sequence. Returns 3 if the hand contains the cards 2, 3, 4, 5, A.
 # Returns -1 if no straight is found.
-def check_straight(hand):
+def check_straight(hand, diffs):
     """
     Consumes a sorted 7 card hand and checks if it contains a straight
-    :param hand: Sorted list of 7 cards.
+    :param hand: Sorted list of 7 cards
+    :param diffs:
     :return: Strength of the strongest card in the straight if found,
     otherwise -1.
     """
-    diffs = get_diffs(hand)
     card_strengths = []
     for card in hand:
         card_strengths.append(card.strength)
@@ -120,13 +125,13 @@ def check_straight(hand):
     return -1
 
 
-def check_quads(hand):
+def check_quads(hand, diffs):
     """
     Consumes a sorted 7 card hand and checks if it contains four of a kind
-    :param hand: Sorted list of 7 cards.
+    :param hand: Sorted list of 7 cards
+    :param diffs:
     :return: Strength of four of a kind card if present, otherwise -1.
     """
-    diffs = get_diffs(hand)
     counter = 0
     for index in range(1, len(hand)):
         if diffs[index] == 0:
@@ -138,14 +143,14 @@ def check_quads(hand):
     return -1
 
 
-def check_trips(hand):
+def check_trips(hand, diffs):
     """
     Consumes a sorted 7 card hand and returns every instance of trips
-    :param hand: Sorted list of 7 cards.
+    :param hand: Sorted list of 7 cards
+    :param diffs:
     :return: Strength of trips card(s) in descending list, empty
     list if none found
     """
-    diffs = get_diffs(hand)
     counter = 0
     trips = []
     for index in range(1, len(hand)):
@@ -160,14 +165,14 @@ def check_trips(hand):
     return trips
 
 
-def check_pairs(hand):
+def check_pairs(hand, diffs):
     """
     Consumes a sorted 7 card hand and returns each pair strength
     :param hand: Sorted list of 7 cards
+    :param diffs:
     :return: A list with the strength of each pair found, empty
     if no pairs
     """
-    diffs = get_diffs(hand)
     pairs = []
     for index in range(1, len(hand)):
         if diffs[index] == 0 and index < len(diffs) - 1 \
