@@ -14,7 +14,10 @@ def get_strength(player_hand, comm_cards):
     # check for flush and straight flush
     flush = check_flush(hand)
     if flush != -1:
+        copy = []
         for card in hand:
+            copy.append(card)
+        for card in copy:
             if card.suit != flush:
                 hand.remove(card)
         diffs = get_diffs(hand)
@@ -119,8 +122,8 @@ def check_straight(hand, diffs):
             counter = 0
     if longest >= 4:
         return strength
-    if card_strengths.count(12) >= 1 and card_strengths.count(0) >= 1 and card_strengths.count(1) >= 1 and \
-            card_strengths.count(2) >= 1 and card_strengths.count(3) >= 1:
+    if (card_strengths.count(12) >= 1 and card_strengths.count(0) >= 1 and card_strengths.count(1) >= 1
+            and card_strengths.count(2) >= 1 and card_strengths.count(3) >= 1):
         return 3
     return -1
 

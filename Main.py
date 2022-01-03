@@ -85,6 +85,8 @@ if __name__ == '__main__':
 
         index_list = [0, 1, 2, 3, 4]
         total_hands = 0
+        sf_counter = 0
+        f = open("results.txt", "w")
         player_wins = []
         for player in player_hands:
             player_wins.append(0)
@@ -105,6 +107,13 @@ if __name__ == '__main__':
 
             if strongest_index != -1:
                 player_wins[strongest_index] += 1
+                if strongest_hand[0] == "8" and strongest_index == 0:
+                    sf_counter += 1
+                    # results = "[ "
+                    # for card in comm_cards:
+                    #     results += str(card) + " - "
+                    # results += " ]"
+                    # f.write(results)
 
             index_list = Increment.increment_indices(index_list, len(deck.cards))
             total_hands += 1
@@ -112,20 +121,24 @@ if __name__ == '__main__':
                 print(str(total_hands) + " hands done")
 
         print(str(total_hands) + " hands done")
+        print("straight flushes: {}".format(sf_counter))
+        f.close()
         for index in range(len(player_wins)):
             odds = float((player_wins[index] / total_hands) * 100)
             print(str(player_hands[index][0]) + " " + str(player_hands[index][1]) + " - " + "%.2f" % odds + "%")
+            print("wins: " + str(player_wins[index]))
 
-    # card1 = Card(0, 2)
-    # card2 = Card(1, 2)
-    # card3 = Card(2, 2)
-    # card4 = Card(3, 2)
-    # card5 = Card(4, 2)
-    # card6 = Card(5, 2)
-    # card7 = Card(5, 3)
+    # card1 = Card(10, 2)
+    # card2 = Card(2, 2)
+    # card3 = Card(0, 0)
+    # card4 = Card(0, 1)
+    # card5 = Card(1, 2)
+    # card6 = Card(3, 2)
+    # card7 = Card(12, 2)
     #
     # player_hand = [card1, card2]
     # comm_cards = [card3, card4, card5, card6, card7]
+    # print(HandStrength.get_strength(player_hand, comm_cards))
     # full_hand = HandStrength.get_strength(player_hand, comm_cards)
 
     # player_hand = []

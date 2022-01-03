@@ -13,13 +13,13 @@ class Card:
     def __str__(self):
         suit_char = ""
         if self.suit == 0:
-            suit_char = "♦"
+            suit_char = "D"
         elif self.suit == 1:
-            suit_char = "♥"
+            suit_char = "H"
         elif self.suit == 2:
-            suit_char = "♠"
+            suit_char = "S"
         elif self.suit == 3:
-            suit_char = "♣"
+            suit_char = "C"
 
         str_char = ""
         if self.strength < 8:
