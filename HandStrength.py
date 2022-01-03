@@ -14,7 +14,10 @@ def get_strength(player_hand, comm_cards):
     # check for flush and straight flush
     flush = check_flush(hand)
     if flush != -1:
+        copy = []
         for card in hand:
+            copy.append(card)
+        for card in copy:
             if card.suit != flush:
                 hand.remove(card)
         diffs = get_diffs(hand)
