@@ -1,4 +1,13 @@
 def increment_indices(index_list, list_size):
+    """
+    Consumes a list of integers representing indices and the size
+    of the list. Returns the next combination of indices if able.
+    Returns false if index_list cannot be incremented
+    :param index_list: List of integers (indices)
+    :param list_size: Size of list
+    :return: Updates index_list to the next possible combination if
+    able, otherwise returns false
+    """
     if len(index_list) == 0 or index_list[0] == list_size - len(index_list):
         return False
     else:

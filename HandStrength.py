@@ -3,6 +3,13 @@ def sort_key(card):
 
 
 def get_strength(player_hand, comm_cards):
+    """
+    Calculates the strength of the best hand that can be formed using
+    the player's hand and the community cards.
+    :param player_hand: List of 2 cards
+    :param comm_cards: List of 5 cards
+    :return: String representing the strength of the hand
+    """
     hand = []
     for card in player_hand:
         hand.append(card)
@@ -65,7 +72,11 @@ def get_strength(player_hand, comm_cards):
 
 
 def get_diffs(hand):
-    # diffs = [-1, -1, -1, -1, -1, -1, -1]
+    """
+    Consumes a sorted hand and returns a list of first differences
+    :param hand: List of sorted cards
+    :return: List of first difference integers
+    """
     diffs = []
     for i in hand:
         diffs.append(-1)
@@ -75,8 +86,6 @@ def get_diffs(hand):
     return diffs
 
 
-# Consumes a sorted list of 7 cards. If any suit occurs 5 or more times in the hand, returns
-# that suit value, otherwise returns -1.
 def check_flush(hand):
     """
     Consumes a sorted 7 card hand and checks for a flush
@@ -94,15 +103,12 @@ def check_flush(hand):
     return -1
 
 
-# Consumes a sorted list of 7 cards. If the hand contains a sequence of least 5 cards wherein
-# the strength of each card in the sequence is one greater than the previous, returns the value
-# of the largest strength in the sequence. Returns 3 if the hand contains the cards 2, 3, 4, 5, A.
-# Returns -1 if no straight is found.
 def check_straight(hand, diffs):
     """
-    Consumes a sorted 7 card hand and checks if it contains a straight
+    Consumes a sorted 7 card hand and checks if it contains a straight.
+    Accounts for the case where a 5-high straight is formed using an Ace.
     :param hand: Sorted list of 7 cards
-    :param diffs:
+    :param diffs: First differences for the cards in the hand
     :return: Strength of the strongest card in the straight if found,
     otherwise -1.
     """
@@ -188,6 +194,12 @@ def check_pairs(hand, diffs):
 
 
 def convert_to_hex(number):
+    """
+    Converts the numbers 10, 11, and 12 to their hex equivalent so
+    each card strength will be one character
+    :param number: Integer between 0 and 12 to be converted to a string
+    :return: String representation of the input number
+    """
     if number == 10:
         return "A"
     if number == 11:
@@ -198,10 +210,24 @@ def convert_to_hex(number):
 
 
 def get_straight_flush_strength(strength):
+    """
+    Straight flush is represented with an 8, followed by the highest
+    card in the straight flush
+    :param strength: Strength of the strongest card in the straight
+    flush
+    :return: Hand strength string
+    """
     return "8" + convert_to_hex(strength)
 
 
 def get_flush_strength(hand, suit):
+    """
+    Flush is represented by 5, followed by the highest 5 cards in
+    descending order
+    :param hand: List of Cards in the flush
+    :param suit: The suit of the flush
+    :return: Hand strength string
+    """
     result = "5"
     for index in range(len(hand) - 1, -1, -1):
         if hand[index].suit == suit:
@@ -212,10 +238,23 @@ def get_flush_strength(hand, suit):
 
 
 def get_straight_strength(strength):
+    """
+    Straight is represented by a 4, followed by the highest card
+    in the straight.
+    :param strength: Strength of the highest straight card
+    :return: Hand strength string
+    """
     return "4" + convert_to_hex(strength)
 
 
 def get_quads_strength(hand, quad_card):
+    """
+    Four of a kind is represented by a 7, followed by the strength
+    of the four of a kind card, then the next highest card.
+    :param hand: List of cards
+    :param quad_card: Strength of the four of a kind card
+    :return: Hand strength string
+    """
     result = "7" + convert_to_hex(quad_card)
     for index in range(len(hand) - 1, -1, -1):
         if hand[index].strength != quad_card:
@@ -226,6 +265,13 @@ def get_quads_strength(hand, quad_card):
 
 
 def get_trips_strength(hand, trips):
+    """
+    Three of a kind is represented by a 3, followed by the strength
+    of the three of a kind card, then the next two highest cards
+    :param hand: List of cards
+    :param trips: Strength of the three of a kind card
+    :return: Hand strength string
+    """
     result = "3" + convert_to_hex(trips[0])
     for index in range(len(hand) - 1, -1, -1):
         if hand[index].strength != trips[0]:
@@ -236,6 +282,13 @@ def get_trips_strength(hand, trips):
 
 
 def get_two_pair_strength(hand, pairs):
+    """
+    Two pairs is represented by a 2, followed by the strongest pair,
+    the weaker pair, and the strongest remaining card
+    :param hand: List of cards
+    :param pairs: List of pair strengths
+    :return: Hand strength string
+    """
     result = "2" + convert_to_hex(pairs[0]) + convert_to_hex(pairs[1])
     for index in range(len(hand) - 1, -1, -1):
         if hand[index].strength != pairs[0] and hand[index].strength != pairs[1]:
@@ -246,6 +299,13 @@ def get_two_pair_strength(hand, pairs):
 
 
 def get_pair_strength(hand, pairs):
+    """
+    One pair is represented by a 1, followed by the strength of the
+    pair card, then the next three highest remaining cards
+    :param hand: List of cards
+    :param pairs: Pair strength
+    :return: Hand strength string
+    """
     result = "1" + convert_to_hex(pairs[0])
     for index in range(len(hand) - 1, -1, -1):
         if hand[index].strength != pairs[0]:
@@ -256,6 +316,12 @@ def get_pair_strength(hand, pairs):
 
 
 def get_high_card_strength(hand):
+    """
+    High card is represented by a 0, followed by the five strongest
+    cards in descending order
+    :param hand: List of cards
+    :return: Hand strength string
+    """
     result = "0"
     for index in range(len(hand) - 1, -1, -1):
         result += convert_to_hex(hand[index].strength)

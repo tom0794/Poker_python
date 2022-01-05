@@ -39,7 +39,8 @@ def get_card_index(cards, strength, suit):
 
 
 if __name__ == '__main__':
-
+    # User inputs the number of players, then each card for each player.
+    # Win probability is calculated for each player.
     while True:
         deck = Deck()
         num_players = input("How many players? Enter 2-8: ")
