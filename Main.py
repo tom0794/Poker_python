@@ -41,6 +41,7 @@ def get_card_index(cards, strength, suit):
 if __name__ == '__main__':
     # User inputs the number of players, then each card for each player.
     # Win probability is calculated for each player.
+    print(Increment.random_indices(5, 48))
     while True:
         deck = Deck()
         num_players = input("How many players? Enter 2-8: ")
@@ -89,7 +90,8 @@ if __name__ == '__main__':
         player_wins = []
         for player in player_hands:
             player_wins.append(0)
-        while index_list:
+        # while index_list:
+        while total_hands < 100000:
             comm_cards = []
             for index in index_list:
                 comm_cards.append(deck.cards[index])
@@ -107,7 +109,8 @@ if __name__ == '__main__':
             if strongest_index != -1:
                 player_wins[strongest_index] += 1
 
-            index_list = Increment.increment_indices(index_list, len(deck.cards))
+            # index_list = Increment.increment_indices(index_list, len(deck.cards))
+            index_list = Increment.random_indices(5, len(deck.cards))
             total_hands += 1
             if total_hands % 100000 == 0:
                 print(str(total_hands) + " hands done")
