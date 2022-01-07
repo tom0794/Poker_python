@@ -26,22 +26,19 @@ def increment_indices(index_list, list_size):
         return False
 
 
-def random_indices(number_of_indices, collection):
-    # index_list = []
-    # for i in range(list_size):
-    #     index_list.append(-1)
-    # for i in range(len(index_list)):
-    #     finished = False
-    #     while not finished:
-    #         index_list[i] = random.randrange(0, collection - 1)
-    #         for j in range(len(index_list)):
-    #             if i != j and index_list[i] == index_list[j]:
-    #                 break
-    #             if i != j and index_list[i] != index_list[j] and j == len(index_list) - 1:
-    #                 finished = True
-
+def random_indices(number_of_indices, collection_size):
+    """
+    Generates a list of random numbers between 0 and a given
+    maximum, with no repeating numbers
+    :param number_of_indices: Number of elements in the list
+    to return
+    :param collection_size: Size of collection random numbers
+    are being created for
+    :return: A list of random numbers between 0 and
+    collection_size - 1, with no repeating numbers
+    """
     available_indices = []
-    for i in range(collection):
+    for i in range(collection_size):
         available_indices.append(i)
     index_list = []
     for j in range(number_of_indices):
