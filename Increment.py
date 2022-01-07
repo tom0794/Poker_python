@@ -1,5 +1,6 @@
 import random
 
+
 def increment_indices(index_list, list_size):
     """
     Consumes a list of integers representing indices and the size
@@ -47,5 +48,4 @@ def random_indices(number_of_indices, collection_size):
         available_indices.remove(available_indices[index])
 
     return index_list
-
 
